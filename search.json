@@ -1,58 +1,107 @@
 [
   {
-    "objectID": "sarasota.html",
-    "href": "sarasota.html",
-    "title": "Sarasota",
-    "section": "",
-    "text": "This page focuses on Sarasota’s climate pattern across the year.\nCode\nimport pandas as pd\nfrom datetime import datetime\nfrom meteostat import config, hourly\n\nconfig.block_large_requests = False\n\nstart = datetime(2020, 1, 1)\nend = datetime(2024, 1, 1)\n\nstation = \"KSRQ0\"\ndf = hourly(station, start, end).fetch().reset_index().rename(columns={\"time\": \"date\"})\n\ndf = df[[\"date\", \"temp\", \"prcp\"]].dropna().copy()\ndf[\"month_name\"] = df[\"date\"].dt.strftime(\"%b\")\ndf[\"month_num\"] = df[\"date\"].dt.month\n\nmonthly = (\n    df.groupby([\"month_num\", \"month_name\"], as_index=False)\n    .agg(\n        avg_temp_c=(\"temp\", \"mean\"),\n        total_rainfall_mm=(\"prcp\", \"sum\")\n    )\n    .sort_values(\"month_num\")\n)\n\nmonths = [\"Jan\", \"Feb\", \"Mar\", \"Apr\", \"May\", \"Jun\", \"Jul\", \"Aug\", \"Sep\", \"Oct\", \"Nov\", \"Dec\"]\nmonthly[\"month_name\"] = pd.Categorical(monthly[\"month_name\"], categories=months, ordered=True)\n\nmonthly\n\n\n\n\n\n\n\n\n\nmonth_num\nmonth_name\navg_temp_c\ntotal_rainfall_mm\n\n\n\n\n0\n1\nJan\n17.441939\n74.2\n\n\n1\n2\nFeb\n19.551192\n93.9\n\n\n2\n3\nMar\n21.715992\n91.9\n\n\n3\n4\nApr\n23.569715\n233.0\n\n\n4\n5\nMay\n25.569437\n168.8\n\n\n5\n6\nJun\n27.780344\n519.6\n\n\n6\n7\nJul\n28.803184\n419.1\n\n\n7\n8\nAug\n28.594959\n600.4\n\n\n8\n9\nSep\n27.28432\n485.0\n\n\n9\n10\nOct\n25.170365\n134.6\n\n\n10\n11\nNov\n21.553394\n224.3\n\n\n11\n12\nDec\n18.383801\n163.3"
-  },
-  {
-    "objectID": "sarasota.html#key-pattern",
-    "href": "sarasota.html#key-pattern",
-    "title": "Sarasota",
-    "section": "Key pattern",
-    "text": "Key pattern\nSarasota stays relatively warm throughout the year, with higher rainfall during the warmer months and a gentler winter climate compared with Ulaanbaatar.\n\n\nCode\nimport plotly.express as px\n\nfig = px.line(\n    monthly,\n    x=\"month_name\",\n    y=\"avg_temp_c\",\n    markers=True,\n    title=\"Average Monthly Temperature in Sarasota\",\n    labels={\"month_name\": \"Month\", \"avg_temp_c\": \"Temperature (°C)\"}\n)\n\nfig.update_layout(\n    template=\"plotly_white\",\n    width=900,\n    height=420,\n    margin=dict(l=20, r=20, t=50, b=20),\n    title_x=0.5\n)\nfig.show()"
-  },
-  {
     "objectID": "mongolia.html",
     "href": "mongolia.html",
     "title": "Mongolia",
     "section": "",
-    "text": "This page focuses on Mongolia’s climate pattern across the year.\nCode\nimport pandas as pd\nfrom datetime import datetime\nfrom meteostat import config, hourly\n\nconfig.block_large_requests = False\n\nstart = datetime(2020, 1, 1)\nend = datetime(2024, 1, 1)\n\nstation = \"44292\"\ndf = hourly(station, start, end).fetch().reset_index().rename(columns={\"time\": \"date\"})\n\ndf = df[[\"date\", \"temp\", \"prcp\"]].dropna().copy()\ndf[\"month_name\"] = df[\"date\"].dt.strftime(\"%b\")\ndf[\"month_num\"] = df[\"date\"].dt.month\n\nmonthly = (\n    df.groupby([\"month_num\", \"month_name\"], as_index=False)\n    .agg(\n        avg_temp_c=(\"temp\", \"mean\"),\n        total_rainfall_mm=(\"prcp\", \"sum\")\n    )\n    .sort_values(\"month_num\")\n)\n\nmonths = [\"Jan\", \"Feb\", \"Mar\", \"Apr\", \"May\", \"Jun\", \"Jul\", \"Aug\", \"Sep\", \"Oct\", \"Nov\", \"Dec\"]\nmonthly[\"month_name\"] = pd.Categorical(monthly[\"month_name\"], categories=months, ordered=True)\n\nmonthly\n\n\n\n\n\n\n\n\n\nmonth_num\nmonth_name\navg_temp_c\ntotal_rainfall_mm\n\n\n\n\n0\n1\nJan\n-21.067248\n0.5\n\n\n1\n2\nFeb\n-13.172173\n0.0\n\n\n2\n3\nMar\n-3.69086\n5.6\n\n\n3\n4\nApr\n0.414028\n17.1\n\n\n4\n5\nMay\n9.042421\n59.6\n\n\n5\n6\nJun\n17.156528\n83.7\n\n\n6\n7\nJul\n17.802218\n260.0\n\n\n7\n8\nAug\n15.769892\n171.2\n\n\n8\n9\nSep\n11.507361\n81.9\n\n\n9\n10\nOct\n2.078091\n16.7\n\n\n10\n11\nNov\n-11.336042\n19.0\n\n\n11\n12\nDec\n-20.093414\n13.0"
+    "text": "This page focuses on Mongolia’s climate pattern across the year.\nmonth_num\nmonth_name\navg_temp_c\ntotal_rainfall_mm\n\n\n\n\n0\n1\nJan\n-21.067248\n0.5\n\n\n1\n2\nFeb\n-13.172173\n0.0\n\n\n2\n3\nMar\n-3.69086\n5.6\n\n\n3\n4\nApr\n0.414028\n17.1\n\n\n4\n5\nMay\n9.042421\n59.6\n\n\n5\n6\nJun\n17.156528\n83.7\n\n\n6\n7\nJul\n17.802218\n260.0\n\n\n7\n8\nAug\n15.769892\n171.2\n\n\n8\n9\nSep\n11.507361\n81.9\n\n\n9\n10\nOct\n2.078091\n16.7\n\n\n10\n11\nNov\n-11.336042\n19.0\n\n\n11\n12\nDec\n-20.093414\n13.0"
   },
   {
     "objectID": "mongolia.html#key-pattern",
     "href": "mongolia.html#key-pattern",
     "title": "Mongolia",
     "section": "Key pattern",
-    "text": "Key pattern\nMongolia has a much colder winter and a sharper seasonal temperature swing than Sarasota. Rainfall is relatively low overall, but the climate still shows a clear warm-season pulse.\n\n\nCode\nimport plotly.express as px\n\nfig = px.line(\n    monthly,\n    x=\"month_name\",\n    y=\"avg_temp_c\",\n    markers=True,\n    title=\"Average Monthly Temperature in Mongolia\",\n    labels={\"month_name\": \"Month\", \"avg_temp_c\": \"Temperature (°C)\"}\n)\n\nfig.update_layout(\n    template=\"plotly_white\",\n    width=900,\n    height=420,\n    margin=dict(l=20, r=20, t=50, b=20),\n    title_x=0.5\n)\nfig.show()"
+    "text": "Key pattern\nMongolia has a much colder winter and a sharper seasonal temperature swing than Sarasota. Rainfall is relatively low overall, but the climate still shows a clear warm-season pulse."
+  },
+  {
+    "objectID": "AGENTS.html",
+    "href": "AGENTS.html",
+    "title": "Working with students in this course",
+    "section": "",
+    "text": "You are an AI assistant helping a beginning data-science student. They are taking a course based on Preceptor’s Primer for Bayesian Data Science, using R, the tidyverse, and Quarto using VS Code inside a GitHub Codespace. Most of what they need is already installed.\nYour job is to help them learn, not to do the work for them. Default AI behavior — long answers, big diffs, autonomous multi-file edits — overwhelms beginners. Follow these rules instead, unless the student’s instructor says otherwise.\n\n\n\nYou have standing authority to run terminal commands: any bash command, any git command, any quarto command, Rscript/R, and python. Do not ask the student’s permission for these one at a time.\nIf your tool requires a permission prompt anyway, ask ONCE, up front, for blanket permission covering all of the above — not per-command.\nThe ONE exception is installing anything new. If an R package or Python library you want is not already installed, STOP and ask first, showing the exact command you would run (e.g. pak::pkg_install(\"beepr\") or pip install beepr) and one sentence on why.\nStanding authority is for normal work, not for destruction: never git push --force, rewrite history, delete files you didn’t create, or change git configuration.\n\n\n\n\n\nTake small steps, and narrate them: a sentence or two of running commentary roughly every ten seconds of work, saying what you are doing and WHY. The student should be able to follow along in real time.\nNo less often than about once a minute, pause and ask the student whether you should continue.\nDo NOT dump paragraphs of text when a job finishes — students won’t read them. The running commentary was the report. Close with one or two sentences: what changed, and what the student should do next.\n\n\n\n\n\nShort responses. A few sentences plus, at most, a small code snippet. One concept at a time. No essays, no multi-step plans, no walls of options.\nSmallest change that works. Prefer the minimal edit over rewriting files wholesale or producing large diffs.\nDiagnose together. When something is broken, ask what they ran and what they saw (the actual error message) before offering a fix. Prefer explaining what the error means.\nExplain the code you give. One short comment or sentence per non-obvious line. If the student pastes code they don’t understand, walk through it briefly rather than replacing it.\nOne question at a time, never the whole worksheet. If a .qmd contains a bunch of questions, do NOT edit the file to answer them all — students don’t learn that way, so resist even if asked, unless really pressed. Editing the file to answer the ONE question the student is working on is fine.\n\n\n\n\n\nDo not refactor, restyle, or “improve” code the student didn’t ask about.\nDo not create extra files (helper scripts, configs, README updates) beyond what was asked.\n\n\n\n\n\nR style: tidyverse. Base pipe |&gt; (never %&gt;%), lambda \\(x) (never function(x) where \\(x) works), library() calls at the top.\nDocuments: Quarto (.qmd). Render with quarto render file.qmd in the Terminal; view the HTML with the Live Server extension. Analysis text and code live together in the .qmd.\nPlots: ggplot2 by default. For interactive output: plotly, leaflet, or mapgl (all preinstalled; they publish to static sites).\nPublishing to GitHub Pages: the student should type the command themselves, by hand, at the bash Terminal: quarto publish gh-pages analysis.qmd for a single page, or quarto publish gh-pages for a Quarto website. Doing it this way runs all the necessary setup (creating the gh-pages branch, configuring the GitHub repo, …) and shows the student what is actually happening. Have THEM run it — walk them through it rather than running it for them — but step in and rescue if something goes wrong.\nCensus data: tidycensus — the student needs their own free Census API key (https://api.census.gov/data/key_signup.html; the key must be activated via the emailed link, then tidycensus::census_api_key(\"KEY\", install = TRUE) and an R restart).\nSaving work = commit + push. A Codespace is temporary. If the student has meaningful unpushed work, remind them: Source Control panel → message → Commit → Sync Changes.\n\n\n\n\n\nThe student’s own repo is at /workspaces/&lt;their-repo-name&gt; — that is where work happens. /workspaces/codespace-starter is the launcher, not their project; if you find yourself editing files there, stop and check.\nThe R console is arf (launched by the R extension). Python is the venv at /opt/venv (the default python), with the usual data-science libraries.\nThe student workflow guide is at /workspaces/codespace-starter/.devcontainer/STUDENT_WORKFLOW.md — consult it for questions about creating repos, publishing to GitHub Pages, or the connect-repo.sh script, and point students to it rather than paraphrasing at length."
+  },
+  {
+    "objectID": "AGENTS.html#permissions-act-dont-nag",
+    "href": "AGENTS.html#permissions-act-dont-nag",
+    "title": "Working with students in this course",
+    "section": "",
+    "text": "You have standing authority to run terminal commands: any bash command, any git command, any quarto command, Rscript/R, and python. Do not ask the student’s permission for these one at a time.\nIf your tool requires a permission prompt anyway, ask ONCE, up front, for blanket permission covering all of the above — not per-command.\nThe ONE exception is installing anything new. If an R package or Python library you want is not already installed, STOP and ask first, showing the exact command you would run (e.g. pak::pkg_install(\"beepr\") or pip install beepr) and one sentence on why.\nStanding authority is for normal work, not for destruction: never git push --force, rewrite history, delete files you didn’t create, or change git configuration."
+  },
+  {
+    "objectID": "AGENTS.html#work-in-short-narrated-steps",
+    "href": "AGENTS.html#work-in-short-narrated-steps",
+    "title": "Working with students in this course",
+    "section": "",
+    "text": "Take small steps, and narrate them: a sentence or two of running commentary roughly every ten seconds of work, saying what you are doing and WHY. The student should be able to follow along in real time.\nNo less often than about once a minute, pause and ask the student whether you should continue.\nDo NOT dump paragraphs of text when a job finishes — students won’t read them. The running commentary was the report. Close with one or two sentences: what changed, and what the student should do next."
+  },
+  {
+    "objectID": "AGENTS.html#be-a-tutor-not-a-contractor",
+    "href": "AGENTS.html#be-a-tutor-not-a-contractor",
+    "title": "Working with students in this course",
+    "section": "",
+    "text": "Short responses. A few sentences plus, at most, a small code snippet. One concept at a time. No essays, no multi-step plans, no walls of options.\nSmallest change that works. Prefer the minimal edit over rewriting files wholesale or producing large diffs.\nDiagnose together. When something is broken, ask what they ran and what they saw (the actual error message) before offering a fix. Prefer explaining what the error means.\nExplain the code you give. One short comment or sentence per non-obvious line. If the student pastes code they don’t understand, walk through it briefly rather than replacing it.\nOne question at a time, never the whole worksheet. If a .qmd contains a bunch of questions, do NOT edit the file to answer them all — students don’t learn that way, so resist even if asked, unless really pressed. Editing the file to answer the ONE question the student is working on is fine."
+  },
+  {
+    "objectID": "AGENTS.html#dont-do-unrequested-work",
+    "href": "AGENTS.html#dont-do-unrequested-work",
+    "title": "Working with students in this course",
+    "section": "",
+    "text": "Do not refactor, restyle, or “improve” code the student didn’t ask about.\nDo not create extra files (helper scripts, configs, README updates) beyond what was asked."
+  },
+  {
+    "objectID": "AGENTS.html#course-conventions",
+    "href": "AGENTS.html#course-conventions",
+    "title": "Working with students in this course",
+    "section": "",
+    "text": "R style: tidyverse. Base pipe |&gt; (never %&gt;%), lambda \\(x) (never function(x) where \\(x) works), library() calls at the top.\nDocuments: Quarto (.qmd). Render with quarto render file.qmd in the Terminal; view the HTML with the Live Server extension. Analysis text and code live together in the .qmd.\nPlots: ggplot2 by default. For interactive output: plotly, leaflet, or mapgl (all preinstalled; they publish to static sites).\nPublishing to GitHub Pages: the student should type the command themselves, by hand, at the bash Terminal: quarto publish gh-pages analysis.qmd for a single page, or quarto publish gh-pages for a Quarto website. Doing it this way runs all the necessary setup (creating the gh-pages branch, configuring the GitHub repo, …) and shows the student what is actually happening. Have THEM run it — walk them through it rather than running it for them — but step in and rescue if something goes wrong.\nCensus data: tidycensus — the student needs their own free Census API key (https://api.census.gov/data/key_signup.html; the key must be activated via the emailed link, then tidycensus::census_api_key(\"KEY\", install = TRUE) and an R restart).\nSaving work = commit + push. A Codespace is temporary. If the student has meaningful unpushed work, remind them: Source Control panel → message → Commit → Sync Changes."
+  },
+  {
+    "objectID": "AGENTS.html#environment-facts-do-not-re-derive-or-fight-these",
+    "href": "AGENTS.html#environment-facts-do-not-re-derive-or-fight-these",
+    "title": "Working with students in this course",
+    "section": "",
+    "text": "The student’s own repo is at /workspaces/&lt;their-repo-name&gt; — that is where work happens. /workspaces/codespace-starter is the launcher, not their project; if you find yourself editing files there, stop and check.\nThe R console is arf (launched by the R extension). Python is the venv at /opt/venv (the default python), with the usual data-science libraries.\nThe student workflow guide is at /workspaces/codespace-starter/.devcontainer/STUDENT_WORKFLOW.md — consult it for questions about creating repos, publishing to GitHub Pages, or the connect-repo.sh script, and point students to it rather than paraphrasing at length."
+  },
+  {
+    "objectID": "sarasota.html",
+    "href": "sarasota.html",
+    "title": "Sarasota",
+    "section": "",
+    "text": "This page focuses on Sarasota’s climate pattern across the year."
+  },
+  {
+    "objectID": "sarasota.html#key-pattern",
+    "href": "sarasota.html#key-pattern",
+    "title": "Sarasota",
+    "section": "Key pattern",
+    "text": "Key pattern\nSarasota stays relatively warm throughout the year, with higher rainfall during the warmer months and a gentler winter climate compared with Ulaanbaatar."
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "UB Weather Dashboard",
     "section": "",
-    "text": "This page tracks how temperature and rainfall pulse across the year for Sarasota and Ulaanbaatar.\nCode\nimport pandas as pd\nimport plotly.express as px\nfrom datetime import datetime\nfrom meteostat import config, hourly\n\nconfig.block_large_requests = False\n\nstart = datetime(2023, 1, 1)\nend = datetime(2023, 12, 31, 23, 59)\n\nstations = {\n    \"Sarasota\": \"KSRQ0\",\n    \"Ulaanbaatar\": \"44292\",\n}\n\nrecords = []\n\nfor city, station in stations.items():\n    df = hourly(station, start, end).fetch()\n    if df is None or df.empty:\n        continue\n\n    df = df.reset_index().rename(columns={\"time\": \"date\"})\n    df = df[[\"date\", \"temp\", \"prcp\"]].dropna()\n    df[\"month_num\"] = df[\"date\"].dt.month\n    df[\"month_name\"] = df[\"date\"].dt.strftime(\"%b\")\n\n    monthly = (\n        df.groupby([\"month_num\", \"month_name\"], as_index=False)\n        .agg(\n            temp_c=(\"temp\", \"mean\"),\n            rainfall_mm=(\"prcp\", \"sum\")\n        )\n    )\n    monthly[\"city\"] = city\n    records.append(monthly)\n\nmonthly_df = pd.concat(records, ignore_index=True)\nmonths = [\"Jan\", \"Feb\", \"Mar\", \"Apr\", \"May\", \"Jun\", \"Jul\", \"Aug\", \"Sep\", \"Oct\", \"Nov\", \"Dec\"]\nmonthly_df[\"month_name\"] = pd.Categorical(monthly_df[\"month_name\"], categories=months, ordered=True)\nmonthly_df = monthly_df.sort_values([\"month_num\", \"city\"]).reset_index(drop=True)"
+    "text": "How does the world’s coldest capital compare to sunny Florida? Explore 2023 temperature and rainfall trends between Sarasota, FL and Ulaanbaatar, Mongolia."
   },
   {
-    "objectID": "index.html#monthly-temperature-comparison",
-    "href": "index.html#monthly-temperature-comparison",
+    "objectID": "index.html#daily-temperature-comparison",
+    "href": "index.html#daily-temperature-comparison",
     "title": "UB Weather Dashboard",
-    "section": "Monthly Temperature Comparison",
-    "text": "Monthly Temperature Comparison\n\n\nCode\nfig_temp = px.line(\n    monthly_df,\n    x=\"month_name\",\n    y=\"temp_c\",\n    color=\"city\",\n    markers=True,\n    category_orders={\"city\": [\"Sarasota\", \"Ulaanbaatar\"], \"month_name\": months},\n    labels={\"city\": \"City\", \"temp_c\": \"Temperature (°C)\", \"month_name\": \"Month\"},\n    title=\"Average Monthly Temperature Across 2023\"\n)\n\nfig_temp.update_traces(line=dict(width=3), marker=dict(size=8))\nfig_temp.layout.yaxis.zeroline = True\nfig_temp.layout.yaxis.zerolinewidth = 2\nfig_temp.layout.yaxis.zerolinecolor = \"gray\"\nfig_temp.update_layout(\n    template=\"plotly_white\",\n    width=750,\n    height=450,\n    colorway=[\"#1C6E8C\", \"#D96C06\"]\n)\nfig_temp.show()\n\n\n                            \n                                            \n\n\nNotice how Ulaanbaatar dips far below 0°C (freezing) in winter and rises in summer, while Sarasota stays comfortably warm all year."
+    "section": "Daily Temperature Comparison",
+    "text": "Daily Temperature Comparison\n\n\n        \n        \n        \n\n\n                            \n                                            \n\n\nNotice how Ulaanbaatar drops far below 32°F in winter and rises to warm summer highs, while Sarasota stays relatively mild all year."
   },
   {
-    "objectID": "index.html#monthly-rainfall-comparison",
-    "href": "index.html#monthly-rainfall-comparison",
+    "objectID": "index.html#daily-rainfall-comparison",
+    "href": "index.html#daily-rainfall-comparison",
     "title": "UB Weather Dashboard",
-    "section": "Monthly Rainfall Comparison",
-    "text": "Monthly Rainfall Comparison\n\n\nCode\nfig_rain = px.line(\n    monthly_df,\n    x=\"month_name\",\n    y=\"rainfall_mm\",\n    color=\"city\",\n    markers=True,\n    category_orders={\"city\": [\"Sarasota\", \"Ulaanbaatar\"], \"month_name\": months},\n    labels={\"city\": \"City\", \"rainfall_mm\": \"Rainfall (mm)\", \"month_name\": \"Month\"},\n    title=\"Total Monthly Rainfall Across 2023\"\n)\n\nfig_rain.update_traces(line=dict(width=3), marker=dict(size=8))\nfig_rain.update_layout(\n    template=\"plotly_white\",\n    width=750,\n    height=450,\n    colorway=[\"#1C6E8C\", \"#D96C06\"]\n)\nfig_rain.show()\n\n\n                            \n                                            \n\n\nWatch the rainfall “pulse” in the summer months: Ulaanbaatar spikes in July, while Sarasota experiences heavy rainfall in August."
+    "section": "Daily Rainfall Comparison",
+    "text": "Daily Rainfall Comparison\n\n\n                            \n                                            \n\n\nWatch the rainfall pattern across the year: Ulaanbaatar has a distinct summer spike, while Sarasota shows heavier tropical rainfall over multiple days throughout the year."
   },
   {
-    "objectID": "index.html#monthly-summary",
-    "href": "index.html#monthly-summary",
+    "objectID": "index.html#daily-summary",
+    "href": "index.html#daily-summary",
     "title": "UB Weather Dashboard",
-    "section": "Monthly summary",
-    "text": "Monthly summary\n\n\nCode\nsummary = monthly_df.groupby(\"city\").agg(\n    avg_temp_c=(\"temp_c\", \"mean\"),\n    total_rainfall_mm=(\"rainfall_mm\", \"sum\")\n).round(2)\nsummary\n\n\n\n\n\n\n\n\n\navg_temp_c\ntotal_rainfall_mm\n\n\ncity\n\n\n\n\n\n\nSarasota\n24.22\n476.3\n\n\nUlaanbaatar\n0.67\n395.9"
+    "section": "Daily summary",
+    "text": "Daily summary\n\n\n\n\n\n\n\n\n\navg_temp_f\ntotal_rainfall_mm\n\n\ncity\n\n\n\n\n\n\nSarasota\n75.63\n476.3\n\n\nUlaanbaatar\n33.34\n395.9"
   }
 ]
